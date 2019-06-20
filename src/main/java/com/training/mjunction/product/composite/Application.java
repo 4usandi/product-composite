@@ -5,23 +5,24 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import com.netflix.client.config.DefaultClientConfigImpl;
-import com.netflix.client.config.IClientConfig;
 
 import brave.sampler.Sampler;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-@SpringBootApplication//(scanBasePackages= {"com.netflix.client.config.IClientConfig", "com.training.mjunction.product.composite"})
+@SpringBootApplication
 @EnableAutoConfiguration
 @EnableDiscoveryClient
 @EnableHystrix
+@EnableFeignClients
+@EnableCircuitBreaker
 public class Application extends SpringBootServletInitializer {
 
 	@Override

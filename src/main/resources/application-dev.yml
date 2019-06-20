@@ -16,12 +16,25 @@ spring:
         username: "user"       #These two are needed so that the client
         password: "password"   #can register at the protected server api
         url:
-        - ${ADMIN_SERVER_URL:http://localhost:9090/}
+        - ${ADMIN_SERVER_URL:http://172.16.4.58:9090/}
       
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka}
+      defaultZone: ${EUREKA_SERVER_URL:http://172.16.4.58:8761/eureka}
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+    
 
 product-catalog:
   ribbon:
@@ -38,13 +51,15 @@ product-catalog:
   # Max number of next servers to retry (excluding the first server)
   maxAutoRetriesNextServer: 3
 
+hystrix:
+  shareSecurityContext: true
 
 # Logging
 logging:
   pattern:
     console: "[%-5level] %date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %logger{15}#%line %msg\n"
   level:
-    root: INFO
+    root: TRACE
     com.training.mjunction.usersvcs: ERROR
     org.springframework: ERROR
     org.hibernate: ERROR
@@ -55,3 +70,6 @@ logging:
     org.glassfish.jersey.internal.util: ERROR
     org.apache.tomcat.util.descriptor: ERROR
     org.apache.catalina.core: ERROR
+    org.springframework.cloud.openfeign: TRACE
+    com.netflix.loadbalancer: TRACE
+    org.springframework.web.client: TRACE
